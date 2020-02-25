@@ -61,7 +61,12 @@ def process_log_data(spark, input_data, output_data):
     df = df.filter(df.page == 'NextSong')
 
     # extract columns for users table
-    users_table = df['userId', 'firstName', 'lastName', 'gender', 'level']
+    users_table = df[
+                    'userId',
+                    'firstName',
+                    'lastName',
+                    'gender',
+                    'level']
     users_table = users_table.dropDuplicates(['userId'])
 
     # write users table to parquet files
@@ -121,9 +126,8 @@ def process_log_data(spark, input_data, output_data):
 
 def main():
     spark = create_spark_session()
-    input_data = "s3a://udacity-dend/"
-    output_data = "s3a://udacity-dend/sample_output"
-
+    input_data = "s3://awijaya-udacity-dend-project4/"
+    output_data = "s3://awijaya-udacity-dend-project4/output/"
     process_song_data(spark, input_data, output_data)
     process_log_data(spark, input_data, output_data)
 
